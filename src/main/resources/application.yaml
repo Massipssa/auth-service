@@ -1,0 +1,40 @@
+spring:
+  #ldap:
+  #  embedded:
+  #    port: 8389
+  #    ldif: classpath:ldap-data.ldif
+  #    base-dn: dc=springframework,dc=org
+  jpa:
+    hibernate:
+      ddl-auto: update
+datasource:
+  jdbc-url: jdbc:postgresql://localhost:5432/apidb
+  username: airflow
+  password: airflow
+  driver-class-name: org.postgresql.Driver
+  pool-size: 30
+  #ddl-auto: update
+  generate-ddl: true
+  hibernate:
+    ddl-auto: update
+
+
+# TODO(externalize config)
+ldap:
+  url: ldap://localhost:10389
+  base: dc=company,dc=com
+  #userDn: ou=users,
+  #username: cn=Manager,dc=maxcrc,dc=com
+  #password: secret
+
+server:
+  port: 8090
+
+security:
+  basic:
+    enabled: false
+  ignored: /**
+
+management:
+  security:
+    enabled: false
