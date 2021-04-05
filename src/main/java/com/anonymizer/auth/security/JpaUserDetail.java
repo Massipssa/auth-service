@@ -1,17 +1,19 @@
 package com.anonymizer.auth.security;
 
-import com.anonymizer.auth.models.Role;
-import com.anonymizer.auth.models.User;
+import com.anonymizer.auth.model.Role;
+import com.anonymizer.auth.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+@Service
 public class JpaUserDetail implements UserDetails {
 
     private static final long serialVersionUID = 1L;
@@ -21,6 +23,7 @@ public class JpaUserDetail implements UserDetails {
 
     private User user;
 
+    public JpaUserDetail() {}
     public JpaUserDetail(User user) {
         this.user = user;
     }

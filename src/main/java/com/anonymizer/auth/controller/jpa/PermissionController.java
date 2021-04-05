@@ -1,7 +1,7 @@
 package com.anonymizer.auth.controller.jpa;
 
-import com.anonymizer.auth.models.Permission;
-import com.anonymizer.auth.services.jpa.PermissionService;
+import com.anonymizer.auth.model.Permission;
+import com.anonymizer.auth.service.jpa.PermissionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class PermissionController {
 
     private static final Logger LOG = LoggerFactory.getLogger(RoleController.class);
@@ -21,18 +22,18 @@ public class PermissionController {
     @Autowired
     PermissionService permissionService;
 
-    @PostMapping(path = "/api/v1/permission/")
+    @PostMapping(path = "/api/v1/auth/permission")
     @ResponseStatus(HttpStatus.CREATED)
     public Permission addPermission(@Valid @NotNull @RequestBody Permission permission) {
         return permissionService.createPermission(permission);
     }
 
-    @GetMapping(path = "/api/v1/permissions")
+    @GetMapping(path = "/api/v1/auth/permissions")
     public List<Permission> getAllPermissions() {
         return permissionService.getAllPermissions();
     }
 
-    @GetMapping(path = "/api/v1/permission/{name}")
+    @GetMapping(path = "/api/v1/auth/permission/{name}")
     public Optional<Permission> getPermissionByName(@PathVariable("name") String name) {
         return permissionService.getPermissionByName(name);
     }

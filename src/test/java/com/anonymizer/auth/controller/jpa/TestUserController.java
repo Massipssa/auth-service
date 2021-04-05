@@ -1,10 +1,9 @@
 package com.anonymizer.auth.controller.jpa;
 
-import com.anonymizer.auth.models.User;
+import com.anonymizer.auth.model.User;
 import com.anonymizer.auth.repository.UserRepository;
-import com.anonymizer.auth.services.jpa.UserService;
+import com.anonymizer.auth.service.jpa.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Test;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,9 +114,9 @@ public class TestUserController {
         final User testUser = new User(1,"test_user", "test_password", "email");
         // When
         when(mockUserService.getUserByName(testUser.getUserName())).thenReturn(Optional.of(testUser));
-        mockUserService.deleteUser(testUser.getUserName());
+        mockUserService.deleteUserById(testUser.getId());
         // Then
-        verify(mockUserService, times(1)).deleteUser(testUser.getUserName());
+        verify(mockUserService, times(1)).deleteUserById(testUser.getId());
         //assertNull(mockUserService.getUserByName(testUser.getUserName()));
 
         // mokmvc

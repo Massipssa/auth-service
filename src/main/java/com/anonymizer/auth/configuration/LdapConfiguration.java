@@ -9,25 +9,25 @@ import org.springframework.ldap.core.support.LdapContextSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Configuration
+@ConfigurationProperties("ldap")
 public class LdapConfiguration {
 
     @Autowired
     Environment env;
 
-    @Bean
-    @ConfigurationProperties("ldap")
+ /*   @Bean
     public LdapContextSource contextSource () {
         LdapContextSource contextSource= new LdapContextSource();
-        contextSource.setUrl(env.getRequiredProperty("ldap.url"));
-        contextSource.setBase(env.getRequiredProperty("ldap.base"));
-        // contextSource.setUserDn(env.getRequiredProperty("ldap.userDn"));
-        // contextSource.setPassword(env.getRequiredProperty("ldap.password"));
+        contextSource.setUrl(env.getRequiredProperty("url"));
+        contextSource.setBase(env.getRequiredProperty("base"));
+        contextSource.setUserDn(env.getRequiredProperty("userDn"));
+        contextSource.setPassword(env.getRequiredProperty("password"));
         return contextSource;
-    }
+    }*/
 
-    @Bean
+    /*@Bean
     public LdapTemplate ldapTemplate() {
         return new LdapTemplate(contextSource());
-    }
+    }*/
 
 }

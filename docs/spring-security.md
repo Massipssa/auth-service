@@ -28,12 +28,12 @@
     * Redirect by default to page **index** inside **resources/static** folder
     * **Drawbacks**
         * We cannot logout (because evry request must indicate user and password)
-
-<img src="screeshots/basic_auth.PNG"/> 
+    
+![basic_auth](./screenshots/basic_auth.png)
 
 3. **OAuth2**
     * Get access from third party (ex: from Gmail, Facebook)
-    * App A ask App B to be authiticate. If App B accepte (user accept) it will send him a Token
+    * App A ask App B to be authenticated. If App B accepts (user accept) it will send him a Token
 
 3. **Role based Auth**
     * We may need to deny access to some api
@@ -50,14 +50,33 @@
 - Useful with microservice
 - Format: 
     - Header: algorithm and type
-    - Payload: Subject, name and expiration date
+      
+    ```json
+      {
+        "typ": "JWT",
+        "alg": "RSA256"
+      }
+    ```
+    - Payload (Body): Issuer, expiration (number of seconds), audition (an application id)
+      subject (how am I, it's user id), 
+    ```json
+      {
+        "iss": "app.io",
+        "exp": "1300000855",
+        "aud": "124de-dede4-deded",
+        "sub": "124de-dede4-deded",
+        "name": "The name",
+        "roles": ["the-role"]
+      }
+    ```
     - Verify signature    
 
 
 ### Single Sign On (SSO)
 
 1. **Security Assertion Markup Language (SAML)**
-    * Use one single point to authentication user to different applications
+    * Use one single point to authenticate user to different applications
+      It can also be used for authorization
     * Compromised of:
         * User: to be identified
         * Identity provider

@@ -1,9 +1,11 @@
 package com.anonymizer.auth.security;
 
 import com.anonymizer.auth.configuration.Datasource;
-import com.anonymizer.auth.services.jpa.JpaUserServiceDetails;
+import com.anonymizer.auth.service.jpa.JpaUserServiceDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -29,9 +31,12 @@ public class JpaSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+       http.csrf().disable()
                 .authorizeRequests()
-                .anyRequest().authenticated()
+                .antMatchers("/api/v1/auth/jwt")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
                 .and()
                 .httpBasic();
     }
@@ -41,6 +46,14 @@ public class JpaSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(jpaUserServiceDetails); //.passwordEncoder(passwordEncoder());
+        auth.userDetailsService(jpaUserServiceDetails);
+    }
+
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 }
+
+

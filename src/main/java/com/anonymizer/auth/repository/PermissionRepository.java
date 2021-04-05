@@ -1,6 +1,6 @@
 package com.anonymizer.auth.repository;
 
-import com.anonymizer.auth.models.Permission;
+import com.anonymizer.auth.model.Permission;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

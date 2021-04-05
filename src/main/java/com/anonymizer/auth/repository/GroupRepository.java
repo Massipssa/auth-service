@@ -1,6 +1,6 @@
 package com.anonymizer.auth.repository;
 
-import com.anonymizer.auth.models.Group;
+import com.anonymizer.auth.model.Group;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
