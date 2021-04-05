@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/Massipssa/auth-service.svg?token=1WzPHJsFpvuFQPyV28Cy&branch=master)](https://travis-ci.com/Massipssa/auth-service)
 # Auth
 
 The current service is ... to allow other third party (client) to be able to perform the following actions:
