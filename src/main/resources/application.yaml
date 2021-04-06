@@ -45,8 +45,8 @@ ldap:
   #username: cn=Manager,dc=maxcrc,dc=com
   #password: secret
 
-#server:
-#  port: 8090
+server:
+  port: 8090
 
 jwt:
   secret: secret

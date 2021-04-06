@@ -33,13 +33,14 @@ public class JpaSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
        http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/auth/jwt")
+                .antMatchers("/api/v1/auth/user/register", "/api/v1/auth/jwt/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .httpBasic();
     }
+
 
     /**
      * Finds user in database and encodes its password with the encoder

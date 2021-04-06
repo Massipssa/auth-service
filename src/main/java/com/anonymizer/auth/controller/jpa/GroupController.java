@@ -15,6 +15,7 @@ import java.util.Optional;
 
 
 @RestController
+@RequestMapping("/api/v1/auth/group")
 @CrossOrigin(origins = "http://localhost:4200")
 public class GroupController {
 
@@ -23,29 +24,29 @@ public class GroupController {
     @Autowired
     private GroupService groupService;
 
-    @PostMapping(path = "/api/v1/auth/group")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Group addGroup(@Valid @NotNull @RequestBody Group group) {
         LOG.debug(String.format("group: {} created", group.getGroupName()));
         return groupService.createGroup(group);
     }
 
-    @GetMapping(path = "/api/v1/auth/groups")
+    @GetMapping(path = "/groups")
     public List<Group> getAllGroups() {
         return groupService.getAllGroup();
     }
 
-    @GetMapping(path = "/api/v1/auth/group/{groupName}")
+    @GetMapping(path = "/{groupName}")
     public Optional<Group> getUserByGroupName(@PathVariable("groupName") String groupName) {
         return groupService.getGroupByName(groupName);
     }
 
-    @DeleteMapping(path = "/api/v1/auth/group/{id}")
+    @DeleteMapping(path = "/{id}")
     public void deleteGroupById(@PathVariable("id") int id) {
         groupService.deleteGroupById(id);
     }
 
-    @PutMapping(path = "/api/v1/auth/group/{id}")
+    @PutMapping(path = "/{id}")
     public Group updateGroup(@Valid @NotNull @RequestBody Group group, @PathVariable("id") int id) {
         return groupService.updateGroup(group, id);
     }

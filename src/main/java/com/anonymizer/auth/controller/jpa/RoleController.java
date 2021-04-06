@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/api/v1/auth/role")
 @CrossOrigin(origins = "http://localhost:4200")
 public class RoleController {
 
@@ -22,28 +23,28 @@ public class RoleController {
     @Autowired
     RoleService roleService;
 
-    @PostMapping(path = "/api/v1/auth/role")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Role addRole(@Valid @NotNull @RequestBody Role role) {
         return roleService.createRole(role);
     }
 
-    @GetMapping(path = "/api/v1/auth/roles")
+    @GetMapping(path = "/roles")
     public List<Role> getAllRoles() {
         return roleService.getAllRoles();
     }
 
-    @GetMapping(path = "/api/v1/auth/role/{name}")
+    @GetMapping(path = "/{name}")
     public Optional<Role> getRoleByName(@PathVariable("name") String name) {
         return roleService.geRoleByName(name);
     }
 
-    @DeleteMapping(path = "/api/v1/auth/role/{id}")
+    @DeleteMapping(path = "/{id}")
     public void deleteRoleById(@PathVariable("id") int id) {
         roleService.deleteRoleById(id);
     }
 
-    @PutMapping(path = "/api/v1/auth/role/{id}")
+    @PutMapping(path = "/{id}")
     public Role updateRole(@Valid @NotNull @RequestBody Role role, @PathVariable("id") int id) {
         return roleService.updateRole(role, id);
     }

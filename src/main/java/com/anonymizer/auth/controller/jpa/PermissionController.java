@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/api/v1/auth/permission")
 @CrossOrigin(origins = "http://localhost:4200")
 public class PermissionController {
 
@@ -22,28 +23,28 @@ public class PermissionController {
     @Autowired
     PermissionService permissionService;
 
-    @PostMapping(path = "/api/v1/auth/permission")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Permission addPermission(@Valid @NotNull @RequestBody Permission permission) {
         return permissionService.createPermission(permission);
     }
 
-    @GetMapping(path = "/api/v1/auth/permissions")
+    @GetMapping(path = "/permissions")
     public List<Permission> getAllPermissions() {
         return permissionService.getAllPermissions();
     }
 
-    @GetMapping(path = "/api/v1/auth/permission/{name}")
+    @GetMapping(path = "/{name}")
     public Optional<Permission> getPermissionByName(@PathVariable("name") String name) {
         return permissionService.getPermissionByName(name);
     }
 
-    @DeleteMapping(path = "/api/v1/permission/{name}")
-    public void deletePermissionById(@PathVariable("name") String name) {
-        permissionService.deletePermission(name);
+    @DeleteMapping(path = "/{id}")
+    public void deletePermissionById(@PathVariable("id") int id) {
+        throw new UnsupportedOperationException();
     }
 
-    @PutMapping(path = "/api/v1/permission/{id}")
+    @PutMapping(path = "/{id}")
     public Permission updatePermission(@Valid @NotNull @RequestBody Permission permission, @PathVariable("id") int id) {
         return permissionService.updatePermission(permission, id);
     }
