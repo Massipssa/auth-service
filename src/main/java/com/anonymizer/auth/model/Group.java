@@ -1,16 +1,25 @@
 package com.anonymizer.auth.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
 @Table(name = "groups")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Group {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @JsonProperty("name")
     private String groupName;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
@@ -28,52 +37,4 @@ public class Group {
             joinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Set<Role> roles;
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getGroupName() {
-        return groupName;
-    }
-
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
 }

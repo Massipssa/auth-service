@@ -1,6 +1,9 @@
 package com.anonymizer.auth.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -8,6 +11,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "roles")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Role {
 
     @Id
@@ -41,64 +47,4 @@ public class Role {
     )
     private Set<Permission> permissions;
 
-    public Role() {}
-    public Role(String name) {
-        this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
-
-    public Set<Group> getGroups() {
-        return groups;
-    }
-
-    public void setGroups(Set<Group> groups) {
-        this.groups = groups;
-    }
-
-    public Set<Permission> getPermissions() {
-        return permissions;
-    }
-
-    public void setPermissions(Set<Permission> permissions) {
-        this.permissions = permissions;
-    }
 }

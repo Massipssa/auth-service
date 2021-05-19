@@ -41,7 +41,7 @@ public class PermissionController {
 
     @DeleteMapping(path = "/{id}")
     public void deletePermissionById(@PathVariable("id") int id) {
-        throw new UnsupportedOperationException();
+        permissionService.deletePermissionById(id);
     }
 
     @PutMapping(path = "/{id}")

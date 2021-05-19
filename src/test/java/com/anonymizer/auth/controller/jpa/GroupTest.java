@@ -1,8 +1,8 @@
 package com.anonymizer.auth.controller.jpa;
 
 import com.anonymizer.auth.AuthApplication;
-import com.anonymizer.auth.model.Role;
-import com.anonymizer.auth.service.jpa.RoleService;
+import com.anonymizer.auth.model.Group;
+import com.anonymizer.auth.service.jpa.GroupService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
@@ -19,7 +19,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -28,109 +31,109 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
-@SpringBootTest(classes={AuthApplication.class, RoleController.class})
+@SpringBootTest(classes = {AuthApplication.class, GroupController.class})
 @WithMockUser(username = "user", password = "pwd", roles = "ADMIN")
-public class RoleControllerTest {
+public class GroupTest {
+
 
     private static final ObjectMapper om = new ObjectMapper();
-    private Role testRole;
-    private String rolePayload;
+    private Group testGroup;
+    private String groupPayload;
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private RoleService mockRoleService;
+    private GroupService mockGroupService;
 
     @Before
     public void setUp() throws JsonProcessingException {
         LocalDateTime currentTime =  LocalDateTime.now();
-        testRole = new Role(1, "test-role",
+        testGroup = new Group(1, "test-group",
                 null,
                 null,
-                Collections.emptySet(),
                 Collections.emptySet(),
                 Collections.emptySet()
         );
-        rolePayload = om.writeValueAsString(testRole);
+        groupPayload = om.writeValueAsString(testGroup);
     }
 
     @Test
-    public void should_CreateRole_When_RequestIsValid() throws Exception {
+    public void should_CreateGroup_When_RequestIsValid() throws Exception {
 
-        when(mockRoleService.createRole(any(Role.class))).thenReturn(testRole);
+        when(mockGroupService.createGroup(any(Group.class))).thenReturn(testGroup);
 
-        mockMvc.perform(post("/api/v1/auth/role")
+        mockMvc.perform(post("/api/v1/auth/group")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(rolePayload)
+                .content(groupPayload)
                 .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(testRole.getId()))
-                .andExpect(jsonPath("$.name").value(testRole.getName()));
+                .andExpect(jsonPath("$.id").value(testGroup.getId()))
+                .andExpect(jsonPath("$.name").value(testGroup.getGroupName()));
     }
 
     @Test
-    public void should_ListRoles_When_RequestIsValid() throws Exception {
+    public void should_ListGroups_When_RequestIsValid() throws Exception {
 
-        List<Role> allRoles = Arrays.asList(testRole);
-        given(mockRoleService.getAllRoles()).willReturn(allRoles);
+        List<Group> allGroups = Arrays.asList(testGroup);
+        given(mockGroupService.getAllGroup()).willReturn(allGroups);
 
-        mockMvc.perform(get("/api/v1/auth/role/roles")
+        mockMvc.perform(get("/api/v1/auth/group/groups")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].name", is(testRole.getName())));
+                .andExpect(jsonPath("$[0].name", is(testGroup.getGroupName())));
     }
-
 
     @Test
     public void should_GetRole_WhenRequestIsValid() throws Exception {
 
-        when(mockRoleService.getRoleByName(testRole.getName()))
-                .thenReturn(Optional.of(testRole));
+        when(mockGroupService.getGroupByName(testGroup.getGroupName()))
+                .thenReturn(Optional.of(testGroup));
 
-        mockMvc.perform(get("/api/v1/auth/role/{name}", testRole.getName())
-                .content(rolePayload)
+        mockMvc.perform(get("/api/v1/auth/group/{name}", testGroup.getGroupName())
+                .content(groupPayload)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void whenDelete_theRoleShouldBeDeleted() throws Exception {
+    public void whenDelete_theGroupShouldBeDeleted() throws Exception {
 
-        when(mockRoleService.getRoleByName(testRole.getName()))
-                .thenReturn(Optional.of(testRole));
-        mockRoleService.deleteRoleById(testRole.getId());
+        when(mockGroupService.getGroupByName(testGroup.getGroupName()))
+                .thenReturn(Optional.of(testGroup));
+        mockGroupService.deleteGroupById(testGroup.getId());
 
-        verify(mockRoleService, times(1)).deleteRoleById(testRole.getId());
+        verify(mockGroupService, times(1)).deleteGroupById(testGroup.getId());
 
-        mockMvc.perform(delete("/api/v1/auth/role/{id}", "1")
+        mockMvc.perform(delete("/api/v1/auth/group/{id}", "1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void should_UpdateRole_When_IsValid() throws Exception {
+    public void should_UpdateGroup_When_IsValid() throws Exception {
 
-        when(mockRoleService.updateRole(testRole, 1)).thenReturn(testRole);
+        when(mockGroupService.updateGroup(testGroup, 1)).thenReturn(testGroup);
 
-        mockMvc.perform(put("/api/v1/auth/role/{id}", 1)
-                .content(rolePayload)
+        mockMvc.perform(put("/api/v1/auth/group/{id}", 1)
+                .content(groupPayload)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-                //.andDo(print())
-                //.andExpect(jsonPath("$.id").value(1))
-                //.andExpect(jsonPath("$.name").value("test-role"));
-                //.andReturn()
-                //.getResponse()
-                //.getContentAsString();
+        //.andDo(print())
+        //.andExpect(jsonPath("$.id").value(1))
+        //.andExpect(jsonPath("$.name").value("test-role"));
+        //.andReturn()
+        //.getResponse()
+        //.getContentAsString();
     }
+
 }

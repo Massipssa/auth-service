@@ -48,12 +48,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public void deletePermission(String name) {
-        if (! Strings.isEmpty(name)) {
-            Optional<Permission> privilege = permissionRepository.findByName(name);
-            if (privilege.isPresent()) {
-                permissionRepository.delete(privilege.get());
-            }
-        }
+    public void deletePermissionById(int id) {
+      permissionRepository.deleteById(id);
     }
 }

@@ -11,11 +11,9 @@ public class Datasource {
 
     @Bean
     @ConfigurationProperties("spring.datasource")
-    // ??
     public HikariDataSource hikariDataSource() {
         return DataSourceBuilder
                 .create()
-                //.driverClassName("org.postgresql.Driver")
                 .type(HikariDataSource.class)
                 .build();
     }

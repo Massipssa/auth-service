@@ -10,5 +10,5 @@ public interface PermissionService {
     List<Permission> getAllPermissions();
     Optional<Permission>  getPermissionByName(String name);
     Permission updatePermission(Permission permission, int id);
-    void deletePermission(String name);
+    void deletePermissionById(int id);
 }

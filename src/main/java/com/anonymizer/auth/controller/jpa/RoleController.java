@@ -36,7 +36,7 @@ public class RoleController {
 
     @GetMapping(path = "/{name}")
     public Optional<Role> getRoleByName(@PathVariable("name") String name) {
-        return roleService.geRoleByName(name);
+        return roleService.getRoleByName(name);
     }
 
     @DeleteMapping(path = "/{id}")
